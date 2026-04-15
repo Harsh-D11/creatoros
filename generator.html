@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CreatorOS — Content Generator</title>
+
+  //fonts.googleapis.com">
+  //fonts.gstatic.com" crossorigin>
+  //api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+
+  " />
+  " />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">
+        <a href="index.html" style="display:flex;align-items:center;gap:12px;">
+          <div class="brand-mark">C</div>
+          <span>CreatorOS</span>
+        </a>
+      </div>
+      <nav class="nav-links">
+        <a href="#ideas">Ideas</a>
+        <a href="#images">AI Images</a>
+        <a href="#video">Storyboard</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <!-- IDEA GENERATOR -->
+    <section id="ideas" class="app-section">
+      <div class="container">
+        <div class="app-section-head">
+          <h2>Content Idea Generator</h2>
+          <p>Enter your niche and get 10 ready-to-use content ideas instantly.</p>
+        </div>
+
+        <div class="generator-box">
+          <div class="input-row">
+            <input
+              type="text"
+              id="nicheInput"
+              class="app-input"
+              placeholder="e.g. anime shorts, finance for students, local cafe..."
+            />
+            <select id="modeSelect" class="app-select">
+              <option value="creator">Creator</option>
+              <option value="student">Student</option>
+              <option value="freelancer">Freelancer</option>
+            </select>
+            <select id="platformSelect" class="app-select">
+              <option value="YouTube Shorts">YouTube Shorts</option>
+              <option value="Instagram Reels">Instagram Reels</option>
+              <option value="YouTube">YouTube</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="X (Twitter)">X (Twitter)</option>
+            </select>
+            <button class="btn btn-primary" id="generateIdeas">
+              Generate Ideas
+            </button>
+          </div>
+
+          <div id="ideasOutput" class="output-box hidden">
+            <div class="output-header">
+              <span>Generated Ideas</span>
+              <button class="copy-btn" id="copyIdeas">Copy all</button>
+            </div>
+            <div id="ideasList" class="ideas-list"></div>
+          </div>
+
+          <div id="ideasLoader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Generating ideas...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI IMAGE GENERATOR -->
+    <section id="images" class="app-section">
+      <div class="container">
+        <div class="app-section-head">
+          <h2>AI Image Generator</h2>
+          <p>Describe an image and get a realistic AI-generated visual instantly.</p>
+        </div>
+
+        <div class="generator-box">
+          <div class="input-row">
+            <input
+              type="text"
+              id="imagePrompt"
+              class="app-input"
+              placeholder="e.g. anime character in neon city at night, cinematic..."
+            />
+            <button class="btn btn-primary" id="generateImage">
+              Generate Image
+            </button>
+          </div>
+
+          <div id="imageOutput" class="output-box hidden">
+            <div class="output-header">
+              <span>Generated Image</span>
+              <a id="downloadImage" class="copy-btn" download="creatoros-image.jpg">
+                Download
+              </a>
+            </div>
+            <div class="image-result">
+              <img id="generatedImage" src="" alt="AI Generated" />
+            </div>
+          </div>
+
+          <div id="imageLoader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Generating image...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEO STORYBOARD GENERATOR -->
+    <section id="video" class="app-section">
+      <div class="container">
+        <div class="app-section-head">
+          <h2>Video Storyboard Generator</h2>
+          <p>Enter a video concept and get a shot-by-shot storyboard script.</p>
+        </div>
+
+        <div class="generator-box">
+          <div class="input-row">
+            <input
+              type="text"
+              id="videoPrompt"
+              class="app-input"
+              placeholder="e.g. 60 second reel about morning productivity routine..."
+            />
+            <select id="videoType" class="app-select">
+              <option value="YouTube Shorts">YouTube Shorts</option>
+              <option value="Instagram Reels">Instagram Reels</option>
+              <option value="YouTube">YouTube</option>
+            </select>
+            <button class="btn btn-primary" id="generateVideo">
+              Generate Storyboard
+            </button>
+          </div>
+
+          <div id="videoOutput" class="output-box hidden">
+            <div class="output-header">
+              <span>Storyboard</span>
+              <button class="copy-btn" id="copyVideo">Copy all</button>
+            </div>
+            <div id="videoList" class="ideas-list"></div>
+          </div>
+
+          <div id="videoLoader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Generating storyboard...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">CreatorOS</span>
+        <span class="footer-copy">© 2026 CreatorOS. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Back to Home</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
