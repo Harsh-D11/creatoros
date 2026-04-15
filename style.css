@@ -123,7 +123,7 @@ a {
 
 .btn-primary {
   background: var(--primary);
-  color: white;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
@@ -343,28 +343,62 @@ a {
   color: var(--primary);
 }
 
-/* RESPONSIVE */
+/* PRICING */
 
-@media (max-width: 900px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
 
-  .nav-links {
-    display: none;
-  }
+.pricing-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .feature-grid {
-    grid-template-columns: 1fr;
-  }
+.pricing-featured {
+  border-color: var(--primary);
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
 
-  .workflow-grid {
-    grid-template-columns: 1fr;
-  }
-    .audience-grid {
-    grid-template-columns: 1fr;
-  }
-  /* FAQ */
+.pricing-tagline {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+
+.price span {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.pricing-card ul {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  gap: 4px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 4px 0 10px;
+}
+
+.full-width {
+  width: 100%;
+  justify-content: center;
+}
+
+/* FAQ */
 
 .faq-grid {
   display: grid;
@@ -431,4 +465,40 @@ a {
 .footer-links a:hover {
   color: var(--text);
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .audience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
