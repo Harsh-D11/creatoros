@@ -1,13 +1,17 @@
+const GEMINI_KEY = "YOUR_GEMINI_API_KEY";
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
 async function callGemini(prompt) {
-  const res = await fetch("/api/generate", {
+  const res = await fetch(GEMINI_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt })
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }]
+    })
   });
-
   if (!res.ok) throw new Error("API error");
   const data = await res.json();
-  return data.text;
+  return data.candidates[0].content.parts[0].text;
 }
 
 /* ── IDEA GENERATOR ── */
@@ -49,7 +53,7 @@ No intro text, no explanation, just the 10 numbered ideas.`;
     document.getElementById("ideasOutput").classList.remove("hidden");
   } catch (e) {
     document.getElementById("ideasLoader").classList.add("hidden");
-    alert("Something went wrong. Please try again.");
+    alert("Something went wrong. Please check your API key.");
   }
 });
 
@@ -126,7 +130,9 @@ No intro text, just the 6 shots.`;
     const text = await callGemini(prompt);
     const listEl = document.getElementById("videoList");
     listEl.innerHTML = "";
+
     const blocks = text.split(/\n\s*\n/).filter(b => b.trim().length > 0);
+
     blocks.forEach((block, i) => {
       const div = document.createElement("div");
       div.className = "idea-item";
@@ -134,11 +140,12 @@ No intro text, just the 6 shots.`;
       div.innerHTML = `<span class="idea-number">Shot ${i + 1}.</span>${block.trim()}`;
       listEl.appendChild(div);
     });
+
     document.getElementById("videoLoader").classList.add("hidden");
     document.getElementById("videoOutput").classList.remove("hidden");
   } catch (e) {
     document.getElementById("videoLoader").classList.add("hidden");
-    alert("Something went wrong. Please try again.");
+    alert("Something went wrong. Please check your API key.");
   }
 });
 
