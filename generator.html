@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CreatorOS — Content Generator</title>
-
+  <title>CreatorOS — Generator</title>
   //fonts.googleapis.com">
   //fonts.gstatic.com" crossorigin>
   //api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
-
   " />
   " />
 </head>
@@ -17,7 +15,7 @@
   <header class="site-header">
     <div class="container nav">
       <div class="brand">
-        <a href="index.html" style="display:flex;align-items:center;gap:12px;">
+        <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
           <div class="brand-mark">C</div>
           <span>CreatorOS</span>
         </a>
@@ -63,9 +61,12 @@
               <option value="LinkedIn">LinkedIn</option>
               <option value="X (Twitter)">X (Twitter)</option>
             </select>
-            <button class="btn btn-primary" id="generateIdeas">
-              Generate Ideas
-            </button>
+            <button class="btn btn-primary" id="generateIdeas">Generate Ideas</button>
+          </div>
+
+          <div id="ideasLoader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Generating ideas...</p>
           </div>
 
           <div id="ideasOutput" class="output-box hidden">
@@ -76,11 +77,7 @@
             <div id="ideasList" class="ideas-list"></div>
           </div>
 
-          <div id="ideasLoader" class="loader hidden">
-            <div class="spinner"></div>
-            <p>Generating ideas...</p>
-          </div>
-        </div>
+      </div>
       </div>
     </section>
 
@@ -89,7 +86,7 @@
       <div class="container">
         <div class="app-section-head">
           <h2>AI Image Generator</h2>
-          <p>Describe an image and get a realistic AI-generated visual instantly.</p>
+          <p>Describe an image and get a realistic AI-generated visual instantly. Free, no login needed.</p>
         </div>
 
         <div class="generator-box">
@@ -98,30 +95,26 @@
               type="text"
               id="imagePrompt"
               class="app-input"
-              placeholder="e.g. anime character in neon city at night, cinematic..."
+              placeholder="e.g. anime character in neon city at night, cinematic lighting..."
             />
-            <button class="btn btn-primary" id="generateImage">
-              Generate Image
-            </button>
+            <button class="btn btn-primary" id="generateImage">Generate Image</button>
+          </div>
+
+          <div id="imageLoader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Generating image... this may take 10-20 seconds.</p>
           </div>
 
           <div id="imageOutput" class="output-box hidden">
             <div class="output-header">
               <span>Generated Image</span>
-              <a id="downloadImage" class="copy-btn" download="creatoros-image.jpg">
-                Download
-              </a>
+              <a id="downloadImage" class="copy-btn" target="_blank">Open full size</a>
             </div>
             <div class="image-result">
               <img id="generatedImage" src="" alt="AI Generated" />
             </div>
           </div>
-
-          <div id="imageLoader" class="loader hidden">
-            <div class="spinner"></div>
-            <p>Generating image...</p>
-          </div>
-        </div>
+      </div>
       </div>
     </section>
 
@@ -130,7 +123,7 @@
       <div class="container">
         <div class="app-section-head">
           <h2>Video Storyboard Generator</h2>
-          <p>Enter a video concept and get a shot-by-shot storyboard script.</p>
+          <p>Enter a video concept and get a shot-by-shot storyboard script ready to film.</p>
         </div>
 
         <div class="generator-box">
@@ -146,9 +139,12 @@
               <option value="Instagram Reels">Instagram Reels</option>
               <option value="YouTube">YouTube</option>
             </select>
-            <button class="btn btn-primary" id="generateVideo">
-              Generate Storyboard
-            </button>
+            <button class="btn btn-primary" id="generateVideo">Generate Storyboard</button>
+          </div>
+
+          <div id="videoLoader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Generating storyboard...</p>
           </div>
 
           <div id="videoOutput" class="output-box hidden">
@@ -159,11 +155,7 @@
             <div id="videoList" class="ideas-list"></div>
           </div>
 
-          <div id="videoLoader" class="loader hidden">
-            <div class="spinner"></div>
-            <p>Generating storyboard...</p>
-          </div>
-        </div>
+      </div>
       </div>
     </section>
 
