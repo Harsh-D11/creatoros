@@ -14,9 +14,9 @@ export default async function handler(req, res) {
   }
 
   const models = [
-    'gemini-1.5-flash',
-    'gemini-1.5-flash-8b',
-    'gemini-2.0-flash'
+    'gemini-2.0-flash-lite',
+    'gemini-2.0-flash',
+    'gemini-1.5-flash-latest'
   ];
 
   for (const model of models) {
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       }
 
       const errMsg = (data.error && data.error.message) ? data.error.message : '';
-      if (errMsg.includes('quota') || errMsg.includes('RESOURCE_EXHAUSTED')) {
+      if (response.status === 404 || response.status === 429 || (errMsg && (errMsg.includes('quota') || errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('not found')))) {
         continue;
       }
 
@@ -51,5 +51,5 @@ export default async function handler(req, res) {
     }
   }
 
-  return res.status(429).json({ error: 'All Gemini models are rate limited. Please wait a minute and try again.' });
+  return res.status(429).json({ error: 'Gemini API rate limited. Please wait 60 seconds and try again.' });
 }
