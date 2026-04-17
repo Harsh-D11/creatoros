@@ -1,17 +1,16 @@
-const GEMINI_KEY = "YOUR_GEMINI_API_KEY";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
-
+/* ── Helper: call our secure serverless API ── */
 async function callGemini(prompt) {
-  const res = await fetch(GEMINI_URL, {
+  const res = await fetch("/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }]
-    })
+    body: JSON.stringify({ prompt })
   });
-  if (!res.ok) throw new Error("API error");
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "API error");
+  }
   const data = await res.json();
-  return data.candidates[0].content.parts[0].text;
+  return data.text;
 }
 
 /* ── IDEA GENERATOR ── */
@@ -41,71 +40,59 @@ No intro text, no explanation, just the 10 numbered ideas.`;
     listEl.innerHTML = "";
     let count = 0;
     lines.forEach((line) => {
-      const clean = line.replace(/^\d+[\.\)]\s*/, "").trim();
-      if (!clean) return;
-      count++;
-      const div = document.createElement("div");
-      div.className = "idea-item";
-      div.innerHTML = `<span class="idea-number">${count}.</span>${clean}`;
-      listEl.appendChild(div);
+      if (count >= 10) return;
+      const clean = line.replace(/^\d+\.\s*/, "").trim();
+      if (clean) {
+        const li = document.createElement("li");
+        li.textContent = clean;
+        listEl.appendChild(li);
+        count++;
+      }
     });
     document.getElementById("ideasLoader").classList.add("hidden");
     document.getElementById("ideasOutput").classList.remove("hidden");
-  } catch (e) {
+  } catch (err) {
     document.getElementById("ideasLoader").classList.add("hidden");
-    alert("Something went wrong. Please check your API key.");
+    alert("Error: " + err.message);
   }
 });
 
-/* ── COPY IDEAS ── */
 document.getElementById("copyIdeas").addEventListener("click", () => {
-  const items = document.querySelectorAll("#ideasList .idea-item");
-  const text = Array.from(items)
-    .map((el, i) => `${i + 1}. ${el.textContent.replace(/^\d+\./, "").trim()}`)
-    .join("\n");
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById("copyIdeas");
-    btn.textContent = "Copied!";
-    setTimeout(() => { btn.textContent = "Copy all"; }, 2000);
-  });
+  const items = document.querySelectorAll("#ideasList li");
+  const text = Array.from(items).map((li, i) => `${i + 1}. ${li.textContent}`).join("\n");
+  navigator.clipboard.writeText(text).then(() => alert("Copied!"));
 });
 
-/* ── AI IMAGE GENERATOR ── */
-document.getElementById("generateImage").addEventListener("click", () => {
+/* ── AI IMAGE GENERATOR (Pollinations - free, no key needed) ── */
+document.getElementById("generateImage").addEventListener("click", async () => {
   const prompt = document.getElementById("imagePrompt").value.trim();
-
   if (!prompt) {
-    alert("Please enter an image prompt first.");
+    alert("Please enter an image description first.");
     return;
   }
 
   document.getElementById("imageOutput").classList.add("hidden");
   document.getElementById("imageLoader").classList.remove("hidden");
 
-  const encoded = encodeURIComponent(prompt);
-  const seed = Date.now();
-  const imageUrl = `https://image.pollinations.ai/prompt/${encoded}?width=1280&height=720&nologo=true&seed=${seed}`;
+  const encodedPrompt = encodeURIComponent(prompt);
+  const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=576&nologo=true&enhance=true`;
 
   const img = document.getElementById("generatedImage");
-  img.src = imageUrl;
-
   img.onload = () => {
-    const dl = document.getElementById("downloadImage");
-    dl.href = imageUrl;
     document.getElementById("imageLoader").classList.add("hidden");
     document.getElementById("imageOutput").classList.remove("hidden");
   };
-
   img.onerror = () => {
     document.getElementById("imageLoader").classList.add("hidden");
-    alert("Image generation failed. Try a different prompt.");
+    alert("Image generation failed. Please try again.");
   };
+  img.src = imageUrl;
 });
 
-/* ── VIDEO STORYBOARD GENERATOR ── */
-document.getElementById("generateVideo").addEventListener("click", async () => {
+/* ── STORYBOARD GENERATOR ── */
+document.getElementById("generateStoryboard").addEventListener("click", async () => {
   const concept = document.getElementById("videoPrompt").value.trim();
-  const type = document.getElementById("videoType").value;
+  const videoType = document.getElementById("videoType").value;
 
   if (!concept) {
     alert("Please enter a video concept first.");
@@ -115,49 +102,33 @@ document.getElementById("generateVideo").addEventListener("click", async () => {
   document.getElementById("videoOutput").classList.add("hidden");
   document.getElementById("videoLoader").classList.remove("hidden");
 
-  const prompt = `You are a video director creating a storyboard for a ${type}.
+  const prompt = `You are a professional video director creating a storyboard for ${videoType}.
 Concept: "${concept}"
 Create a shot-by-shot storyboard with exactly 6 shots.
-For each shot include:
-- Shot number and type (e.g. close-up, wide shot)
-- What is shown on screen
-- Voiceover or caption text
-- Duration in seconds
-Separate each shot with a blank line.
-No intro text, just the 6 shots.`;
+For each shot write:
+Shot [number]: [Visual description] | [Voiceover/text on screen] | [Duration in seconds]
+Return only the 6 shots, no intro, no explanation.`;
 
   try {
     const text = await callGemini(prompt);
-    const listEl = document.getElementById("videoList");
+    const lines = text.split("\n").filter(l => l.trim().length > 0);
+    const listEl = document.getElementById("storyboardList");
     listEl.innerHTML = "";
-
-    const blocks = text.split(/\n\s*\n/).filter(b => b.trim().length > 0);
-
-    blocks.forEach((block, i) => {
-      const div = document.createElement("div");
-      div.className = "idea-item";
-      div.style.whiteSpace = "pre-line";
-      div.innerHTML = `<span class="idea-number">Shot ${i + 1}.</span>${block.trim()}`;
-      listEl.appendChild(div);
+    lines.forEach((line) => {
+      const li = document.createElement("li");
+      li.textContent = line.trim();
+      listEl.appendChild(li);
     });
-
     document.getElementById("videoLoader").classList.add("hidden");
     document.getElementById("videoOutput").classList.remove("hidden");
-  } catch (e) {
+  } catch (err) {
     document.getElementById("videoLoader").classList.add("hidden");
-    alert("Something went wrong. Please check your API key.");
+    alert("Error: " + err.message);
   }
 });
 
-/* ── COPY STORYBOARD ── */
-document.getElementById("copyVideo").addEventListener("click", () => {
-  const items = document.querySelectorAll("#videoList .idea-item");
-  const text = Array.from(items)
-    .map((el, i) => `Shot ${i + 1}:\n${el.textContent.replace(/^Shot \d+\./, "").trim()}`)
-    .join("\n\n");
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById("copyVideo");
-    btn.textContent = "Copied!";
-    setTimeout(() => { btn.textContent = "Copy all"; }, 2000);
-  });
+document.getElementById("copyStoryboard").addEventListener("click", () => {
+  const items = document.querySelectorAll("#storyboardList li");
+  const text = Array.from(items).map(li => li.textContent).join("\n");
+  navigator.clipboard.writeText(text).then(() => alert("Copied!"));
 });
