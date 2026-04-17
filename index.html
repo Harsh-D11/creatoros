@@ -4,31 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CreatorOS — AI Content Studio</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  //fonts.googleapis.com">
+  //fonts.gstatic.com" crossorigin>
+  //fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  " />
 </head>
-
 <body>
 
+  <!-- HEADER -->
   <header class="site-header">
     <div class="container nav">
       <div class="brand">
-        <div class="brand-mark">C</div>
-        <span>CreatorOS</span>
+        <span class="brand-text">Creator<span class="brand-accent">OS</span></span>
       </div>
-
       <nav class="nav-links">
         <a href="#features">Features</a>
-        <a href="#workflow">Workflow</a>
+        <a href="#workflow">How it works</a>
         <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
+        <a href="https://github.com/Harsh-D11/creatoros" target="_blank">GitHub</a>
       </nav>
-
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle">🌙</button>
-        <a href="generator.html" class="btn btn-primary">Start Free</a>
+        <a href="generator.html" class="btn-start">Start Free →</a>
       </div>
     </div>
   </header>
@@ -37,42 +33,39 @@
 
     <!-- HERO -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <span class="eyebrow">AI content system for modern creators</span>
-          <h1>Go from one prompt to a full content engine.</h1>
-          <p>
-            Generate niche content ideas, create realistic AI images,
-            produce short videos, and edit everything with simple prompts —
-            all in one place.
-          </p>
-          <div class="hero-actions">
-            <a href="generator.html" class="btn btn-primary">Start for Free</a>
-            <a href="#features" class="btn btn-secondary">See How It Works</a>
+      <div class="container hero-inner">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Powered by Gemini · AI Content Studio
+        </div>
+        <h1 class="hero-title">Creator<span class="accent">OS</span></h1>
+        <p class="hero-sub">
+          Generate niche content ideas, create AI images,<br>
+          build video storyboards — all from one prompt.
+        </p>
+        <div class="hero-divider"></div>
+        <div class="hero-steps">
+          <div class="hero-step">
+            <div class="step-icon">💡</div>
+            <p>Enter your niche or topic</p>
+          </div>
+          <div class="hero-step">
+            <div class="step-icon">🤖</div>
+            <p>AI generates ideas, images & storyboards</p>
+          </div>
+          <div class="hero-step">
+            <div class="step-icon">🚀</div>
+            <p>Publish content in minutes</p>
           </div>
         </div>
-
-        <div class="hero-card">
-          <div class="hero-card-top">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="hero-box">
-            <p>
-              Generate 20 content ideas for an anime shorts channel, create
-              3 thumbnail concepts and one short video storyboard —
-              all from a single prompt.
-            </p>
-          </div>
-          <div class="tag-row">
-            <span>Anime</span>
-            <span>Shorts</span>
-            <span>AI visuals</span>
-          </div>
+        <div class="hero-actions">
+          <a href="generator.html" class="btn-primary">Start for Free</a>
+          <a href="#features" class="btn-ghost">See How It Works</a>
         </div>
       </div>
     </section>
 
-    <!-- STATS BAR -->
+    <!-- STATS -->
     <section class="stats-bar">
       <div class="container stats-grid">
         <div class="stat">
@@ -89,7 +82,7 @@
         </div>
         <div class="stat">
           <h3>3 minutes</h3>
-          <p>Average time to first idea</p>
+          <p>Time to first idea</p>
         </div>
       </div>
     </section>
@@ -98,29 +91,34 @@
     <section id="features" class="section">
       <div class="container">
         <div class="section-head">
+          <span class="section-label">Features</span>
           <h2>One system instead of five tools.</h2>
-          <p>Everything a creator needs — ideas, visuals, videos and edits — without switching between apps.</p>
+          <p>Ideas, visuals, videos and storyboards — without switching between apps.</p>
         </div>
-
+        
         <div class="feature-grid">
           <article class="feature-card">
+            <div class="feature-icon">💡</div>
             <h3>Idea engine by niche</h3>
-            <p>Enter any niche and get hooks, titles, captions and series concepts tailored for your platform and audience.</p>
+            <p>Enter any niche and get hooks, titles and series concepts tailored for your platform.</p>
           </article>
 
           <article class="feature-card">
+            <div class="feature-icon">🎨</div>
             <h3>Realistic AI images</h3>
-            <p>Generate thumbnails, product shots, portraits and scenes. Refine any detail using simple follow-up prompts.</p>
+            <p>Generate thumbnails, portraits and scenes. Refine with simple follow-up prompts.</p>
           </article>
 
           <article class="feature-card">
-            <h3>Short video generation</h3>
-            <p>Build shot-by-shot storyboards for Reels and Shorts, then export them as ready-to-publish short videos.</p>
+            <div class="feature-icon">🎬</div>
+            <h3>Video storyboards</h3>
+            <p>Build shot-by-shot storyboards for Reels and Shorts in seconds.</p>
           </article>
 
           <article class="feature-card">
+            <div class="feature-icon">⚡</div>
             <h3>Prompt-based editing</h3>
-            <p>Change backgrounds, lighting, pacing or style by describing what you want — no timelines or layers needed.</p>
+            <p>Change backgrounds, style or pacing by describing what you want — no layers needed.</p>
           </article>
         </div>
       </div>
@@ -130,74 +128,75 @@
     <section id="workflow" class="section">
       <div class="container">
         <div class="section-head">
+          <span class="section-label">How it works</span>
           <h2>From idea to published asset in four steps.</h2>
-          <p>A simple workflow that keeps your content pipeline moving without switching tools or losing momentum.</p>
+          <p>A simple workflow that keeps your content pipeline moving.</p>
         </div>
 
         <div class="workflow-grid">
-          <div class="step">
-            <span class="step-label">Step 1</span>
+          <div class="step-card">
+            <span class="step-num">01</span>
             <h3>Choose your mode</h3>
             <p>Pick student, creator or freelancer so prompts match your context.</p>
           </div>
-
-          <div class="step">
-            <span class="step-label">Step 2</span>
+          <div class="step-card">
+            <span class="step-num">02</span>
             <h3>Enter your niche</h3>
             <p>Type anything — "anime shorts", "finance channel", "local cafe brand".</p>
           </div>
-
-          <div class="step">
-            <span class="step-label">Step 3</span>
+          <div class="step-card">
+            <span class="step-num">03</span>
             <h3>Generate assets</h3>
-            <p>Get ideas, AI images and short videos for your niche in seconds.</p>
+            <p>Get ideas, AI images and storyboards for your niche in seconds.</p>
           </div>
-
-          <div class="step">
-            <span class="step-label">Step 4</span>
-            <h3>Edit with prompts</h3>
-            <p>Refine thumbnails and clips by describing the changes you want.</p>
+          <div class="step-card">
+            <span class="step-num">04</span>
+            <h3>Publish & grow</h3>
+            <p>Copy, export and publish your content across any platform.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- AUDIENCE -->
-    <section id="audience" class="section">
+    <section class="section">
       <div class="container">
         <div class="section-head">
+          <span class="section-label">Who it's for</span>
           <h2>Built for students, creators and freelancers.</h2>
-          <p>Same powerful engine, adjusted to how each type of creator actually works and what they need most.</p>
+          <p>Same powerful engine, adjusted to how each type of creator works.</p>
         </div>
 
         <div class="audience-grid">
           <article class="audience-card">
+            <div class="audience-icon">🎓</div>
             <h3>Students</h3>
-            <p>Turn notes and topics into visual content and personal brand posts — no design or editing experience needed.</p>
+            <p>Turn notes and topics into visual content and personal brand posts — no design skills needed.</p>
             <ul>
               >Study channel ideas and carousels</li>
               >Explainer-style AI images</li>
-              >Short clips for concepts and summaries</li>
+              >Short clips for concepts</li>
             </ul>
           </article>
-
-          <article class="audience-card">
+          <article class="audience-card featured-audience">
+            <div class="audience-icon">🎥</div>
             <h3>Creators</h3>
-            <p>Run a full content engine for YouTube, Shorts, Reels or X starting from a single niche prompt.</p>
+            <p>Run a full content engine for YouTube, Shorts, Reels or X from a single niche prompt.</p>
             <ul>
               >Niche-based hooks and series plans</li>
               >Thumbnail and cover concepts</li>
-              >Short video ideas and storyboards</li>
+              >Short video storyboards</li>
             </ul>
           </article>
 
           <article class="audience-card">
+            <div class="audience-icon">💼</div>
             <h3>Freelancers</h3>
-            <p>Deliver first drafts faster, keep revision options ready and manage multiple client content styles easily.</p>
+            <p>Deliver first drafts faster and manage multiple client content styles easily.</p>
             <ul>
               >Client-specific content plans</li>
               >Ad creatives and mockups</li>
-              >Prompt-based edits for quick iterations</li>
+              >Quick prompt-based iterations</li>
             </ul>
           </article>
         </div>
@@ -208,8 +207,9 @@
     <section id="pricing" class="section">
       <div class="container">
         <div class="section-head">
+          <span class="section-label">Pricing</span>
           <h2>Start free, upgrade when you grow.</h2>
-          <p>No credit card needed to get started. Upgrade only when you need more power.</p>
+          <p>No credit card needed to get started.</p>
         </div>
 
         <div class="pricing-grid">
@@ -219,23 +219,24 @@
             <p class="price">₹0 <span>/ forever</span></p>
             <ul>
               >10 idea generations / day</li>
-              >Basic image and video prompts</li>
+              >Basic image prompts</li>
               >Export text plans</li>
             </ul>
-            <a href="generator.html" class="btn btn-secondary full-width">Try for Free</a>
+            <a href="generator.html" class="btn-ghost full-width">Try for Free</a>
           </article>
 
           <article class="pricing-card pricing-featured">
+            <div class="popular-badge">Most Popular</div>
             <h3>Creator Pro</h3>
             <p class="pricing-tagline">For creators publishing every week.</p>
             <p class="price">₹299 <span>/ month</span></p>
             <ul>
-              >Unlimited niche idea generation</li>
-              >Realistic AI images and thumbnails</li>
-              >Short video generation credits</li>
-              >Prompt-based edits for images and clips</li>
+              >Unlimited idea generation</li>
+              >Realistic AI images</li>
+              >Video storyboard credits</li>
+              >Prompt-based edits</li>
             </ul>
-            <a href="generator.html" class="btn btn-primary full-width">Get Creator Pro</a>
+            <a href="generator.html" class="btn-primary full-width">Get Creator Pro</a>
           </article>
 
           <article class="pricing-card">
@@ -243,23 +244,23 @@
             <p class="pricing-tagline">For freelancers and small teams.</p>
             <p class="price">₹799 <span>/ month</span></p>
             <ul>
-              >Client workspaces and presets</li>
+              >Client workspaces</li>
               >Batch visual generation</li>
-              >Priority rendering queue</li>
+              >Priority rendering</li>
               >Shareable review links</li>
             </ul>
-            <a href="generator.html" class="btn btn-secondary full-width">Talk to Us</a>
+            <a href="generator.html" class="btn-ghost full-width">Talk to Us</a>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CTA BANNER -->
+    <!-- CTA -->
     <section class="cta-banner">
       <div class="container cta-inner">
         <h2>Start building your content engine today.</h2>
         <p>Join hundreds of creators already using CreatorOS to grow faster.</p>
-        <a href="generator.html" class="btn btn-primary">Get Started Free</a>
+        <a href="generator.html" class="btn-primary">Get Started Free →</a>
       </div>
     </section>
 
@@ -267,6 +268,7 @@
     <section id="faq" class="section">
       <div class="container">
         <div class="section-head">
+          <span class="section-label">FAQ</span>
           <h2>Common questions.</h2>
           <p>Everything you need to know before getting started.</p>
         </div>
@@ -274,32 +276,32 @@
         <div class="faq-grid">
           <div class="faq-item">
             <h3>Who is CreatorOS for?</h3>
-            <p>Students, content creators and freelancers who want to produce high-quality content faster using AI without learning complex tools.</p>
+            <p>Students, content creators and freelancers who want to produce high-quality content faster using AI.</p>
           </div>
 
           <div class="faq-item">
-            <h3>Do I need design or editing skills?</h3>
-            <p>No. Everything works through prompts. Describe what you want and CreatorOS generates, edits or adjusts it for you.</p>
+            <h3>Do I need design skills?</h3>
+            <p>No. Everything works through prompts. Describe what you want and CreatorOS generates it.</p>
           </div>
 
           <div class="faq-item">
             <h3>Which platforms are supported?</h3>
-            <p>Content is optimised for YouTube, Instagram Reels, YouTube Shorts, X and LinkedIn. More platforms are coming soon.</p>
+            <p>YouTube, Instagram Reels, YouTube Shorts, X and LinkedIn. More platforms coming soon.</p>
           </div>
 
           <div class="faq-item">
-            <h3>Can I use the content commercially?</h3>
-            <p>Creator Pro and Studio plans include commercial usage rights for all generated images and videos. Starter is for personal use.</p>
+            <h3>Can I use content commercially?</h3>
+            <p>Creator Pro and Studio plans include commercial usage rights for all generated content.</p>
           </div>
 
           <div class="faq-item">
             <h3>Is there a free plan?</h3>
-            <p>Yes. The Starter plan is free forever with 10 idea generations per day and basic prompts. No credit card needed.</p>
+            <p>Yes. Starter is free forever with 10 idea generations per day. No credit card needed.</p>
           </div>
 
           <div class="faq-item">
             <h3>Can I cancel anytime?</h3>
-            <p>Yes. No long-term contracts. Upgrade, downgrade or cancel your plan at any time from your account settings.</p>
+            <p>Yes. No long-term contracts. Upgrade, downgrade or cancel at any time.</p>
           </div>
         </div>
       </div>
@@ -310,14 +312,14 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-left">
-        <span class="footer-brand">CreatorOS</span>
+        <span class="footer-brand">Creator<span class="accent">OS</span></span>
         <span class="footer-copy">© 2026 CreatorOS. All rights reserved.</span>
       </div>
 
       <div class="footer-links">
         <a href="#">Terms of Use</a>
         <a href="#">Privacy Policy</a>
-        <a href="#">AI Content Disclosure</a>
+        <a href="#">AI Disclosure</a>
       </div>
     </div>
   </footer>
