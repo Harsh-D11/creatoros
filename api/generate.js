@@ -13,29 +13,43 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'API key not configured on server' });
   }
 
-  try {
-    const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
+  const models = [
+    'gemini-1.5-flash',
+    'gemini-1.5-flash-8b',
+    'gemini-2.0-flash'
+  ];
+
+  for (const model of models) {
+    try {
+      const response = await fetch(
+        'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + GEMINI_KEY,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const text = data.candidates[0].content.parts[0].text;
+        return res.status(200).json({ text: text });
       }
-    );
 
-    const data = await response.json();
+      const errMsg = (data.error && data.error.message) ? data.error.message : '';
+      if (errMsg.includes('quota') || errMsg.includes('RESOURCE_EXHAUSTED')) {
+        continue;
+      }
 
-    if (!response.ok) {
-      const errMsg = (data.error && data.error.message) ? data.error.message : JSON.stringify(data);
-      return res.status(response.status).json({ error: errMsg });
+      return res.status(response.status).json({ error: errMsg || JSON.stringify(data) });
+
+    } catch (e) {
+      continue;
     }
-
-    const text = data.candidates[0].content.parts[0].text;
-    return res.status(200).json({ text: text });
-
-  } catch (error) {
-    return res.status(500).json({ error: 'Server error: ' + error.message });
   }
+
+  return res.status(429).json({ error: 'All Gemini models are rate limited. Please wait a minute and try again.' });
 }
