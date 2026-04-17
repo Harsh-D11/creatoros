@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CreatorOS — Generator</title>
-  //fonts.googleapis.com">
-  //fonts.gstatic.com" crossorigin>
-  //api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
-  " />
-  " />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="app.css" />
 </head>
 <body>
 
@@ -42,45 +42,35 @@
         </div>
 
         <div class="generator-box">
-          <div class="input-row">
-            <input
-              type="text"
-              id="nicheInput"
-              class="app-input"
-              placeholder="e.g. anime shorts, finance for students, local cafe..."
-            />
-            <select id="modeSelect" class="app-select">
-              <option value="creator">Creator</option>
-              <option value="student">Student</option>
-              <option value="freelancer">Freelancer</option>
-            </select>
-            <select id="platformSelect" class="app-select">
-              <option value="YouTube Shorts">YouTube Shorts</option>
-              <option value="Instagram Reels">Instagram Reels</option>
-              <option value="YouTube">YouTube</option>
-              <option value="LinkedIn">LinkedIn</option>
-              <option value="X (Twitter)">X (Twitter)</option>
-            </select>
-            <button class="btn btn-primary" id="generateIdeas">Generate Ideas</button>
-          </div>
+          <input type="text" id="nicheInput" class="app-input" placeholder="e.g. anime shorts, finance for students, local cafe..." />
+          <select id="modeSelect" class="app-select">
+            <option value="creator">Creator</option>
+            <option value="student">Student</option>
+            <option value="freelancer">Freelancer</option>
+          </select>
+          <select id="platformSelect" class="app-select">
+            <option value="YouTube Shorts">YouTube Shorts</option>
+            <option value="Instagram Reels">Instagram Reels</option>
+            <option value="YouTube">YouTube</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="X (Twitter)">X (Twitter)</option>
+          </select>
+          <button id="generateIdeas" class="app-btn">Generate Ideas</button>
+        </div>
 
-          <div id="ideasLoader" class="loader hidden">
-            <div class="spinner"></div>
-            <p>Generating ideas...</p>
-          </div>
+        <div id="ideasLoader" class="loader hidden">Generating ideas...</div>
 
-          <div id="ideasOutput" class="output-box hidden">
-            <div class="output-header">
-              <span>Generated Ideas</span>
-              <button class="copy-btn" id="copyIdeas">Copy all</button>
-            </div>
-            <div id="ideasList" class="ideas-list"></div>
+        <div id="ideasOutput" class="output-box hidden">
+          <div class="output-head">
+            <span>Generated Ideas</span>
+            <button id="copyIdeas" class="copy-btn">Copy all</button>
           </div>
+          <ol id="ideasList" class="ideas-list"></ol>
         </div>
       </div>
     </section>
 
-    <!-- AI IMAGE GENERATOR -->
+    <!-- IMAGE GENERATOR -->
     <section id="images" class="app-section">
       <div class="container">
         <div class="app-section-head">
@@ -89,35 +79,21 @@
         </div>
 
         <div class="generator-box">
-          <div class="input-row">
-            <input
-              type="text"
-              id="imagePrompt"
-              class="app-input"
-              placeholder="e.g. anime character in neon city at night, cinematic lighting..."
-            />
-            <button class="btn btn-primary" id="generateImage">Generate Image</button>
-          </div>
+          <input type="text" id="imagePrompt" class="app-input" placeholder="e.g. anime character in neon city at night, cinematic lighting..." />
+          <button id="generateImage" class="app-btn">Generate Image</button>
+        </div>
 
-          <div id="imageLoader" class="loader hidden">
-            <div class="spinner"></div>
-            <p>Generating image... this may take 10-20 seconds.</p>
-          </div>
+        <div id="imageLoader" class="loader hidden">Generating image... this may take 10-20 seconds.</div>
 
-          <div id="imageOutput" class="output-box hidden">
-            <div class="output-header">
-              <span>Generated Image</span>
-              <a id="downloadImage" class="copy-btn" target="_blank">Open full size</a>
-            </div>
-            <div class="image-result">
-              <img id="generatedImage" src="" alt="AI Generated" />
-            </div>
-          </div>
+        <div id="imageOutput" class="output-box hidden">
+          <div class="output-head"><span>Generated Image</span></div>
+          <img id="generatedImage" src="" alt="AI Generated" style="max-width:100%;border-radius:12px;margin-top:16px;" />
+          <p style="font-size:12px;color:var(--muted);margin-top:8px;">AI Generated</p>
         </div>
       </div>
     </section>
 
-    <!-- VIDEO STORYBOARD GENERATOR -->
+    <!-- STORYBOARD GENERATOR -->
     <section id="video" class="app-section">
       <div class="container">
         <div class="app-section-head">
@@ -126,33 +102,23 @@
         </div>
 
         <div class="generator-box">
-          <div class="input-row">
-            <input
-              type="text"
-              id="videoPrompt"
-              class="app-input"
-              placeholder="e.g. 60 second reel about morning productivity routine..."
-            />
-            <select id="videoType" class="app-select">
-              <option value="YouTube Shorts">YouTube Shorts</option>
-              <option value="Instagram Reels">Instagram Reels</option>
-              <option value="YouTube">YouTube</option>
-            </select>
-            <button class="btn btn-primary" id="generateVideo">Generate Storyboard</button>
-          </div>
+          <input type="text" id="videoPrompt" class="app-input" placeholder="e.g. 60 second reel about morning productivity routine..." />
+          <select id="videoType" class="app-select">
+            <option value="YouTube Shorts">YouTube Shorts</option>
+            <option value="Instagram Reels">Instagram Reels</option>
+            <option value="YouTube">YouTube</option>
+          </select>
+          <button id="generateStoryboard" class="app-btn">Generate Storyboard</button>
+        </div>
 
-          <div id="videoLoader" class="loader hidden">
-            <div class="spinner"></div>
-            <p>Generating storyboard...</p>
-          </div>
+        <div id="videoLoader" class="loader hidden">Generating storyboard...</div>
 
-          <div id="videoOutput" class="output-box hidden">
-            <div class="output-header">
-              <span>Storyboard</span>
-              <button class="copy-btn" id="copyVideo">Copy all</button>
-            </div>
-            <div id="videoList" class="ideas-list"></div>
+        <div id="videoOutput" class="output-box hidden">
+          <div class="output-head">
+            <span>Storyboard</span>
+            <button id="copyStoryboard" class="copy-btn">Copy all</button>
           </div>
+          <ol id="storyboardList" class="ideas-list"></ol>
         </div>
       </div>
     </section>
@@ -160,12 +126,10 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <span class="footer-brand">CreatorOS</span>
-        <span class="footer-copy">© 2026 CreatorOS. All rights reserved.</span>
-      </div>
-      <div class="footer-links">
+    <div class="container">
+      <span>CreatorOS</span>
+      <span>&copy; 2026 CreatorOS. All rights reserved.</span>
+      <div>
         <a href="index.html">Back to Home</a>
         <a href="#">Terms of Use</a>
         <a href="#">Privacy Policy</a>
