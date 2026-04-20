@@ -6,8 +6,8 @@
   <title>CreatorOS — Generator</title>
   <meta
     name="description"
-    content="Generate niche content ideas, AI image concepts, and short video storyboards with CreatorOS."
-  .
+    content="Generate niche content ideas, AI image concepts, and short video storyboards with CreatorOS.
+    ".
   />
 
   //fonts.googleapis.com">
@@ -21,14 +21,11 @@
   " />
 </head>
 <body>
-  
+
   <header class="site-header">
     <div class="container nav">
       <div class="brand">
-        <a
-          href="index.html"
-          style="display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit;"
-        >
+        <a class="brand-link" href="index.html">
           <div class="brand-mark">C</div>
           <span>CreatorOS</span>
         </a>
@@ -47,14 +44,38 @@
   </header>
 
   <main class="app-main">
-    <!-- IDEAS -->
+    <section class="app-hero">
+      <div class="container app-hero-grid">
+        <div>
+          <span class="eyebrow">Creator workflow</span>
+          <h1>Generate ideas, visuals and storyboards from one prompt.</h1>
+          <p>
+            CreatorOS helps students, creators and freelancers move from a niche idea
+            to usable content assets faster, without jumping between multiple tools.
+          </p>
+        </div>
+
+        <div class="hero-preview">
+          <div class="hero-preview-top">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="hero-preview-box">
+            Anime shorts niche → 10 hooks, 3 thumbnail concepts, 1 storyboard.
+          </div>
+          <div class="hero-preview-tags">
+            <span>YouTube Shorts</span>
+            <span>AI Visuals</span>
+            <span>Fast Workflow</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="ideas" class="app-section">
       <div class="container">
         <div class="app-section-head">
           <h2>Content Idea Generator</h2>
-          <p>
-            Enter your niche and get 10 ready-to-use content ideas instantly.
-          </p>
+          <p>Enter your niche and get ready-to-use content directions instantly.</p>
         </div>
 
         <div class="app-card">
@@ -76,23 +97,19 @@
           </div>
 
           <div id="ideasOutput" class="app-output">
-            <p class="placeholder-text">
-              Your generated ideas will appear here.
-            </p>
+            <p class="placeholder-text">Your generated ideas will appear here.</p>
           </div>
 
         </div>
       </div>
     </section>
 
-    <!-- AI IMAGES -->
+
     <section id="images" class="app-section">
       <div class="container">
         <div class="app-section-head">
           <h2>AI Image Generator</h2>
-          <p>
-            Create realistic image prompts for thumbnails, product visuals, portraits, and ad creatives.
-          </p>
+          <p>Create prompt-ready image concepts for thumbnails, creatives and covers.</p>
         </div>
 
         <div class="app-card">
@@ -107,22 +124,18 @@
           </div>
 
           <div id="imageOutput" class="app-output">
-            <p class="placeholder-text">
-              Your AI image concept will appear here.
-            </p>
+            <p class="placeholder-text">Your AI image concept will appear here.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- STORYBOARD -->
+
     <section id="video" class="app-section">
       <div class="container">
         <div class="app-section-head">
           <h2>Video Storyboard Generator</h2>
-          <p>
-            Turn one idea into a short-form video plan with hook, scenes, and closing CTA.
-          </p>
+          <p>Turn a simple idea into a short-form sequence with scenes, flow and CTA.</p>
         </div>
 
         <div class="app-card">
@@ -133,13 +146,11 @@
               placeholder="e.g. 20-second reel for a cafe launch, anime facts short..."
               aria-label="Enter storyboard prompt"
             />
-            <button id="geneoardBtn" class="btn btn-primary">Generate Storyboard</button>
+            <button id="generateStoryboardBtn" class="btn btn-primary">Generate Storyboard</button>
           </div>
 
           <div id="videoOutput" class="app-output">
-            <p class="placeholder-text">
-              Your storyboard will appear here.
-            </p>
+            <p class="placeholder-text">Your storyboard will appear here.</p>
           </div>
 
         </div>
