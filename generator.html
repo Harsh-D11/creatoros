@@ -3,20 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CreatorOS — Generator</title>
-  <meta
-    name="description"
-    content="Generate niche content ideas, AI image concepts, and short video storyboards with CreatorOS.
-    ".
-  />
-
+  <title>#.AI — Generator</title>
   //fonts.googleapis.com">
   //fonts.gstatic.com" crossorigin>
- //fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    rel="stylesheet"
-  t"
-  />
-
+  //fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   " />
   " />
 </head>
@@ -25,134 +15,96 @@
   <header class="site-header">
     <div class="container nav">
       <div class="brand">
-        <a class="brand-link" href="index.html">
-          <div class="brand-mark">C</div>
-          <span>CreatorOS</span>
-        </a>
+        <div class="brand-icon">#</div>
+        <span class="brand-text">#.<span class="accent">AI</span></span>
       </div>
-
       <nav class="nav-links">
         <a href="#ideas">Ideas</a>
         <a href="#images">AI Images</a>
         <a href="#video">Storyboard</a>
       </nav>
-
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+        <a href="index.html" class="btn-start">← Home</a>
       </div>
     </div>
   </header>
 
   <main class="app-main">
-    <section class="app-hero">
-      <div class="container app-hero-grid">
-        <div>
-          <span class="eyebrow">Creator workflow</span>
-          <h1>Generate ideas, visuals and storyboards from one prompt.</h1>
-          <p>
-            CreatorOS helps students, creators and freelancers move from a niche idea
-            to usable content assets faster, without jumping between multiple tools.
-          </p>
-        </div>
-
-        <div class="hero-preview">
-          <div class="hero-preview-top">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="hero-preview-box">
-            Anime shorts niche → 10 hooks, 3 thumbnail concepts, 1 storyboard.
-          </div>
-          <div class="hero-preview-tags">
-            <span>YouTube Shorts</span>
-            <span>AI Visuals</span>
-            <span>Fast Workflow</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section id="ideas" class="app-section">
       <div class="container">
         <div class="app-section-head">
           <h2>Content Idea Generator</h2>
-          <p>Enter your niche and get ready-to-use content directions instantly.</p>
+          <p>Enter your niche and get 10 ready-to-use content ideas instantly.</p>
         </div>
-
-        <div class="app-card">
-          <div class="app-form-row">
-            <input
-              type="text"
-              id="nicheInput"
-              placeholder="e.g. anime shorts, finance for students, local cafe..."
-              aria-label="Enter your niche"
-            />
-            <select id="platformSelect" aria-label="Choose platform">
-              <option value="YouTube Shorts">YouTube Shorts</option>
-              <option value="Instagram Reels">Instagram Reels</option>
-              <option value="TikTok">TikTok</option>
-              <option value="LinkedIn">LinkedIn</option>
-              <option value="X / Twitter">X / Twitter</option>
-            </select>
-            <button id="generateIdeasBtn" class="btn btn-primary">Generate Ideas</button>
+        <div class="generator-box">
+          <input type="text" id="nicheInput" class="app-input" placeholder="e.g. anime shorts, finance for students, local cafe..." />
+          <select id="modeSelect" class="app-select">
+            <option value="creator">Creator</option>
+            <option value="student">Student</option>
+            <option value="freelancer">Freelancer</option>
+          </select>
+          <select id="platformSelect" class="app-select">
+            <option value="YouTube Shorts">YouTube Shorts</option>
+            <option value="Instagram Reels">Instagram Reels</option>
+            <option value="YouTube">YouTube</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="X (Twitter)">X (Twitter)</option>
+          </select>
+          <button id="generateIdeas" class="app-btn">Generate Ideas</button>
+        </div>
+        <div id="ideasLoader" class="loader hidden">Generating ideas...</div>
+        <div id="ideasOutput" class="output-box hidden">
+          <div class="output-head">
+            <span>Generated Ideas</span>
+            <button id="copyIdeas" class="copy-btn">Copy all</button>
           </div>
-
-          <div id="ideasOutput" class="app-output">
-            <p class="placeholder-text">Your generated ideas will appear here.</p>
-          </div>
-
+          <ol id="ideasList" class="ideas-list"></ol>
         </div>
       </div>
     </section>
-
 
     <section id="images" class="app-section">
       <div class="container">
         <div class="app-section-head">
           <h2>AI Image Generator</h2>
-          <p>Create prompt-ready image concepts for thumbnails, creatives and covers.</p>
+          <p>Describe an image and get a realistic AI-generated visual instantly.</p>
         </div>
-
-        <div class="app-card">
-          <div class="app-form-row">
-            <input
-              type="text"
-              id="imagePromptInput"
-              placeholder="e.g. cinematic anime warrior in neon city, realistic sneaker ad..."
-              aria-label="Enter image prompt"
-            />
-            <button id="generateImageBtn" class="btn btn-primary">Generate Image Prompt</button>
-          </div>
-
-          <div id="imageOutput" class="app-output">
-            <p class="placeholder-text">Your AI image concept will appear here.</p>
-          </div>
+        <div class="generator-box">
+          <input type="text" id="imagePrompt" class="app-input" placeholder="e.g. anime character in neon city at night, cinematic lighting..." />
+          <button id="generateImage" class="app-btn">Generate Image</button>
+        </div>
+        <div id="imageLoader" class="loader hidden">Generating image... this may take 10-20 seconds.</div>
+        <div id="imageOutput" class="output-box hidden">
+          <div class="output-head"><span>Generated Image</span></div>
+          <img id="generatedImage" src="" alt="AI Generated" style="max-width:100%;border-radius:0 0 20px 20px;" />
+          <p style="font-size:12px;color:var(--muted);text-align:center;padding:10px;">AI Generated via Pollinations</p>
         </div>
       </div>
     </section>
-
 
     <section id="video" class="app-section">
       <div class="container">
         <div class="app-section-head">
           <h2>Video Storyboard Generator</h2>
-          <p>Turn a simple idea into a short-form sequence with scenes, flow and CTA.</p>
+          <p>Enter a video concept and get a shot-by-shot storyboard script ready to film.</p>
         </div>
-
-        <div class="app-card">
-          <div class="app-form-row">
-            <input
-              type="text"
-              id="videoPromptInput"
-              placeholder="e.g. 20-second reel for a cafe launch, anime facts short..."
-              aria-label="Enter storyboard prompt"
-            />
-            <button id="generateStoryboardBtn" class="btn btn-primary">Generate Storyboard</button>
+        <div class="generator-box">
+          <input type="text" id="videoPrompt" class="app-input" placeholder="e.g. 60 second reel about morning productivity routine..." />
+          <select id="videoType" class="app-select">
+            <option value="YouTube Shorts">YouTube Shorts</option>
+            <option value="Instagram Reels">Instagram Reels</option>
+            <option value="YouTube">YouTube</option>
+          </select>
+          <button id="generateStoryboard" class="app-btn">Generate Storyboard</button>
+        </div>
+        <div id="videoLoader" class="loader hidden">Generating storyboard...</div>
+        <div id="videoOutput" class="output-box hidden">
+          <div class="output-head">
+            <span>Storyboard</span>
+            <button id="copyStoryboard" class="copy-btn">Copy all</button>
           </div>
-
-          <div id="videoOutput" class="app-output">
-            <p class="placeholder-text">Your storyboard will appear here.</p>
-          </div>
-
+          <ol id="storyboardList"></ol>
         </div>
       </div>
     </section>
@@ -162,20 +114,18 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-left">
-        <span class="footer-brand">CreatorOS</span>
-        <span class="footer-copy">© 2026 CreatorOS. All rights reserved.</span>
+        <span class="footer-brand">#.<span class="accent">AI</span></span>
+        <span class="footer-copy">© 2026 #.AI. All rights reserved.</span>
       </div>
-
       <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="#">Privacy Policy</a>
+        <a href="index.html">Back to Home</a>
         <a href="#">Terms of Use</a>
+        <a href="#">Privacy Policy</a>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
-
+  <script src="app.js"></script>
 </body>
-
 </html>
