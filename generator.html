@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CreatorOS</title>
+  <title>CreatorOS — Generator</title>
   <meta
     name="description"
-    content="Generate niche content ideas, AI image concepts, and short video storyboards with CreatorOS."
+    content="Generate content ideas, visual references, and storyboards with CreatorOS."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,62 +16,78 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 
   <header class="site-header">
-    <div class="container nav">
-      <div class="brand">
-        <div class="brand-icon">#</div>
-        <span class="brand-text">#.<span class="accent">AI</span></span>
-      </div>
+    <div class="container header-inner">
+      <a href="./index.html" class="brand">
+        <span class="brand-mark">#</span>
+        <span class="brand-text">#.AI</span>
+      </a>
+
       <nav class="nav-links">
-         <a href="#ideas" class="active">Ideas</a>
-         <a href="#images" class="active">AI Images</a>
-         <a href="#video" class="active">Storyboard</a>
+        <a href="#ideas" class="active">Ideas</a>
+        <a href="#images">AI Images</a>
+        <a href="#video">Storyboard</a>
       </nav>
-      <div class="nav-actions">
-        <a href="index.html" class="btn-start">← Home</a>
-      </div>
+
     </div>
   </header>
-   
+
   <section class="generator-hero">
-  <div class="container generator-hero-inner">
-    <span class="generator-eyebrow">#.AI workspace</span>
-    <h1>Create ideas, visuals, and storyboards in one place.</h1>
-    <p>
-      Generate content ideas, AI images, and video storyboards .
-    </p>
-  </div>
-</section>
+    <div class="container generator-hero-inner">
+      <span class="generator-eyebrow">#.AI workspace</span>
+      <h1>Create ideas, visuals, and storyboards in one place.</h1>
+      <p>
+        Generate content ideas, find visual references, and build short-form
+        storyboards with a simple creator workflow.
+      </p>
+    </div>
+  </section>
 
   <main class="app-main">
 
     <section id="ideas" class="app-section">
       <div class="container">
         <div class="app-section-head">
-          <h2>Content Idea Generator</h2>
+          <h2>Idea Generator</h2>
           <p>Enter your niche and get 10 ready-to-use content ideas instantly.</p>
         </div>
+
         <div class="generator-box">
-          <input type="text" id="nicheInput" class="app-input" placeholder="e.g. anime shorts, finance for students, local cafe..." />
+          <input
+            id="nicheInput"
+            class="app-input"
+            type="text"
+            placeholder="e.g. anime shorts, finance for beginners, fitness motivation"
+          />
+
+          <button type="button" id="ideaMicBtn" class="copy-btn">🎤</button>
+
           <select id="modeSelect" class="app-select">
-            <option value="creator">Creator</option>
-            <option value="student">Student</option>
-            <option value="freelancer">Freelancer</option>
+            <option value="Creator">Creator</option>
+            <option value="Brand">Brand</option>
+            <option value="Coach">Coach</option>
+            <option value="Freelancer">Freelancer</option>
           </select>
+
           <select id="platformSelect" class="app-select">
             <option value="YouTube Shorts">YouTube Shorts</option>
             <option value="Instagram Reels">Instagram Reels</option>
-            <option value="YouTube">YouTube</option>
+            <option value="TikTok">TikTok</option>
             <option value="LinkedIn">LinkedIn</option>
-            <option value="X (Twitter)">X (Twitter)</option>
+
           </select>
-          <button id="generateIdeas" class="app-btn">Generate Ideas</button>
+
+          <button type="button" id="generateIdeas" class="app-btn">
+            Generate Ideas
+          </button>
         </div>
+
         <div id="ideasLoader" class="loader hidden">Generating ideas...</div>
+
         <div id="ideasOutput" class="output-box hidden">
           <div class="output-head">
             <span>Generated Ideas</span>
@@ -85,44 +101,72 @@
     <section id="images" class="app-section">
       <div class="container">
         <div class="app-section-head">
-          <h2>AI Image Generator</h2>
-          <p>Describe an image and get a realistic AI-generated visual instantly.</p>
+          <h2>Visual Reference Finder</h2>
+          <p>Search for high-quality reference visuals for your topic or scene.</p>
         </div>
+
         <div class="generator-box">
-          <input type="text" id="imagePrompt" class="app-input" placeholder="e.g. anime character in neon city at night, cinematic lighting..." />
-          <button id="generateImage" class="app-btn">Generate Image</button>
+          <input
+            id="imagePrompt"
+            class="app-input"
+            type="text"
+            placeholder="e.g. cyberpunk city at night, anime room setup, luxury desk workspace"
+          />
+
+          <button type="button" id="imageMicBtn" class="copy-btn">🎤</button>
+
+          <button type="button" id="generateImage" class="app-btn">
+            Find Visual
+          </button>
         </div>
-        <div id="imageLoader" class="loader hidden">Generating image... this may take 10-20 seconds.</div>
-        <div id="imageOutput" class="output-box hidden">
-          <div class="output-head"><span>Generated Image</span></div>
-          <img id="generatedImage" src="" alt="AI Generated" style="max-width:100%;border-radius:0 0 20px 20px;" />
-          <p style="font-size:12px;color:var(--muted);text-align:center;padding:10px;">AI Generated via Pollinations</p>
+
+        <div id="imageLoader" class="loader hidden">
+          Finding visual reference...
         </div>
+
+        <div id="imageOutput" class="output-box hidden"></div>
       </div>
     </section>
 
     <section id="video" class="app-section">
       <div class="container">
         <div class="app-section-head">
-          <h2>Video Storyboard Generator</h2>
-          <p>Enter a video concept and get a shot-by-shot storyboard script ready to film.</p>
+          <h2>Storyboard Generator</h2>
+          <p>Enter a concept and get a shot-by-shot storyboard script.</p>
         </div>
+
         <div class="generator-box">
-          <input type="text" id="videoPrompt" class="app-input" placeholder="e.g. 60 second reel about morning productivity routine..." />
+          <input
+            id="videoPrompt"
+            class="app-input"
+            type="text"
+            placeholder="e.g. 30 second reel about study discipline for students"
+          />
+
+          <button type="button" id="storyMicBtn" class="copy-btn">🎤</button>
+
           <select id="videoType" class="app-select">
             <option value="YouTube Shorts">YouTube Shorts</option>
-            <option value="Instagram Reels">Instagram Reels</option>
-            <option value="YouTube">YouTube</option>
+            <option value="Instagram Reel">Instagram Reel</option>
+            <option value="TikTok Video">TikTok Video</option>
+            <option value="Explainer Video">Explainer Video</option>
           </select>
-          <button id="generateStoryboard" class="app-btn">Generate Storyboard</button>
+
+          <button type="button" id="generateStoryboard" class="app-btn">
+            Generate Storyboard
+          </button>
         </div>
-        <div id="videoLoader" class="loader hidden">Generating storyboard...</div>
+
+        <div id="videoLoader" class="loader hidden">
+          Generating storyboard...
+        </div>
+
         <div id="videoOutput" class="output-box hidden">
           <div class="output-head">
             <span>Storyboard</span>
             <button id="copyStoryboard" class="copy-btn">Copy all</button>
           </div>
-          <ol id="storyboardList"></ol>
+          <ol id="storyboardList" class="ideas-list"></ol>
         </div>
       </div>
     </section>
@@ -131,19 +175,11 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div class="footer-left">
-        <span class="footer-brand">#.<span class="accent">AI</span></span>
-        <span class="footer-copy">© 2026 #.AI. All rights reserved.</span>
-      </div>
-      <div class="footer-links">
-        <a href="index.html">Back to Home</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Privacy Policy</a>
-      </div>
+      <p>Built for creators, students, and freelancers.</p>
+      <a href="./index.html">Back to home</a>
     </div>
   </footer>
 
-  <script src="script.js"></script>
-  <script src="app.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
