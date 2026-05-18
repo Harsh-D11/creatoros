@@ -464,7 +464,30 @@ ul { list-style: none; }
   justify-content: center;
   flex-wrap: wrap;
 }
+.section-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
 
+.pricing-copy {
+  font-size: 0.97rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.pricing-note {
+  font-size: 0.9rem;
+  color: var(--muted);
+  opacity: 0.9;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
 /* ── FINAL CTA ── */
 .final-cta-section {
   background: var(--bg2);
