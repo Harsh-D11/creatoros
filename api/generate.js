@@ -3,53 +3,91 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { prompt } = req.body;
-  if (!prompt) {
-    return res.status(400).json({ error: 'Prompt is required' });
-  }
+  try {
+    const { prompt } = req.body || {};
 
-  const GEMINI_KEY = process.env.GEMINI_KEY;
-  if (!GEMINI_KEY) {
-    return res.status(500).json({ error: 'API key not configured on server' });
-  }
+    if (!prompt || !prompt.trim()) {
+      return res.status(400).json({ error: 'Prompt is required' });
+    }
 
-  const models = [
-    'gemini-2.0-flash-lite',
-    'gemini-2.0-flash',
-    'gemini-1.5-flash-latest'
-  ];
+    const GEMINI_KEY = process.env.GEMINI_KEY;
 
-  for (const model of models) {
-    try {
-      const response = await fetch(
-        'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + GEMINI_KEY,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }]
-          })
+    if (!GEMINI_KEY) {
+      return res.status(500).json({ error: 'API key not configured on server' });
+    }
+
+    const models = [
+      'gemini-2.0-flash-lite',
+      'gemini-2.0-flash',
+      'gemini-1.5-flash-latest'
+    ];
+
+    let lastError = 'Unknown error';
+
+    for (const model of models) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: prompt
+                    }
+                  ]
+                }
+              ]
+            })
+          }
+        );
+
+        const data = await response.json();
+        const errMsg = data?.error?.message || '';
+
+        if (response.ok) {
+          const text = data?.candidates?.[0]?.content?.parts
+            ?.map(part => part.text || '')
+            .join('')
+            .trim();
+
+          if (text) {
+            return res.status(200).json({ text });
+          }
+
+          lastError = data?.candidates?.[0]?.finishReason
+            ? `No text returned. Finish reason: ${data.candidates[0].finishReason}`
+            : 'No text returned by Gemini';
+
+          continue;
         }
-      );
 
-      const data = await response.json();
+        lastError = errMsg || JSON.stringify(data);
 
-      if (response.ok) {
-        const text = data.candidates[0].content.parts[0].text;
-        return res.status(200).json({ text: text });
-      }
+        if (
+          response.status === 404 ||
+          response.status === 429 ||
+          errMsg.toLowerCase().includes('quota') ||
+          errMsg.includes('RESOURCE_EXHAUSTED') ||
+          errMsg.toLowerCase().includes('not found')
+        ) {
+          continue;
+        }
 
-      const errMsg = (data.error && data.error.message) ? data.error.message : '';
-      if (response.status === 404 || response.status === 429 || (errMsg && (errMsg.includes('quota') || errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('not found')))) {
+        return res.status(response.status).json({ error: lastError });
+      } catch (err) {
+        lastError = err.message || 'Fetch failed';
         continue;
       }
-
-      return res.status(response.status).json({ error: errMsg || JSON.stringify(data) });
-
-    } catch (e) {
-      continue;
     }
-  }
 
-  return res.status(429).json({ error: 'Gemini API rate limited. Please wait 60 seconds and try again.' });
+    return res.status(500).json({ error: lastError });
+  } catch (error) {
+    return res.status(500).json({ error: error.message || 'Internal server error' });
+  }
 }
