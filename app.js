@@ -1,86 +1,90 @@
-const GROQ_KEY = "YOUR_GROQ_API_KEY";
-const UNSPLASH_KEY = "YOUR_UNSPLASH_ACCESS_KEY";
-
-const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const GROQ_MODEL = "llama-3.3-70b-versatile";
-
-function getOrCreateStatus() {
+function getOrCreateStatus()
+ {
   let el = document.getElementById("statusMsg");
+
   if (!el) {
     el = document.createElement("div");
     el.id = "statusMsg";
     el.style.cssText =
       "display:none;color:#f5f7fb;padding:12px 16px;background:#2a1215;border:1px solid #5b232a;border-radius:10px;margin:16px auto;max-width:1100px;font-weight:500;";
+
     const main = document.querySelector("main");
-    if (main) main.prepend(el);
-    else document.body.prepend(el);
+    if (main) {
+      main.prepend(el);
+    } else {
+      document.body.prepend(el);
+    }
   }
+
   return el;
 }
 
-function showStatus(msg) {
+function showStatus(msg, type = "error") {
   const el = getOrCreateStatus();
+
+  if (!msg) {
+    el.textContent = "";
+    el.style.display = "none";
+    return;
+  }
+
   el.textContent = msg;
-  el.style.display = msg ? "block" : "none";
+  el.style.display = "block";
+
+  if (type === "success") {
+    el.style.background = "#0f1f17";
+    el.style.border = "1px solid #1f6b43";
+    el.style.color = "#d7ffe8";
+  } else {
+    el.style.background = "#2a1215";
+    el.style.border = "1px solid #5b232a";
+    el.style.color = "#f5f7fb";
+  }
 }
 
 async function groqChat(prompt) {
-  const res = await fetch(GROQ_URL, {
+  const res = await fetch("/api/groq", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${GROQ_KEY}`
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      model: GROQ_MODEL,
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a helpful creator assistant. Keep answers practical, concise, and structured."
-        },
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
-      temperature: 0.8
-    })
+    body: JSON.stringify({ prompt })
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Groq API error: ${errText}`);
+    throw new Error(data?.message || "We couldn’t generate content right now.");
   }
 
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content?.trim() || "No response received.";
+  return data.content || "No response received.";
 }
 
 async function fetchUnsplashImage(query) {
-  const res = await fetch(
-    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape&client_id=${UNSPLASH_KEY}`
-  );
-
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Unsplash API error: ${errText}`);
-  }
-
+  const res = await fetch(`/api/unsplash?query=${encodeURIComponent(query)}`);
   const data = await res.json();
 
-  if (!data.results || !data.results.length) {
-    throw new Error("No visual reference found.");
+  if (!res.ok) {
+    throw new Error(data?.message || "We couldn’t fetch visual references right now.");
   }
 
-  return data.results[0];
+  return data.photo;
 }
 
 function makeBulletList(text) {
   return text
     .split("\n")
-    .map(line => line.replace(/^[-*0-9.)\s]+/, "").trim())
+    .map((line) => line.replace(/^[-*0-9.)\s]+/, "").trim())
     .filter(Boolean);
+}
+
+async function copyTextToClipboard(text, successMessage) {
+  try {
+    await navigator.clipboard.writeText(text);
+    showStatus(successMessage, "success");
+  } catch {
+    showStatus("Copy failed. Please copy manually.");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -89,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const generateStoryboardBtn = document.getElementById("generateStoryboard");
 
   if (!generateIdeasBtn || !generateImageBtn || !generateStoryboardBtn) {
-    showStatus("JS loaded but one or more buttons were not found.");
+    showStatus("App loaded, but one or more generator buttons were not found.");
     return;
   }
 
@@ -135,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const text = await groqChat(prompt);
       const items = makeBulletList(text).slice(0, 10);
 
-      items.forEach(item => {
+      items.forEach((item) => {
         const li = document.createElement("li");
         li.textContent = item;
         ideasList.appendChild(li);
@@ -145,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ideasOutput.classList.remove("hidden");
     } catch (err) {
       ideasLoader.classList.add("hidden");
-      showStatus("Error: " + err.message);
+      showStatus(err.message || "We couldn’t generate ideas right now.");
     } finally {
       generateIdeasBtn.disabled = false;
     }
@@ -153,15 +157,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const copyIdeas = document.getElementById("copyIdeas");
   if (copyIdeas) {
-    copyIdeas.addEventListener("click", function () {
+    copyIdeas.addEventListener("click", async function () {
       const items = document.querySelectorAll("#ideasList li");
       const text = Array.from(items)
         .map((li, i) => `${i + 1}. ${li.textContent}`)
         .join("\n");
 
-      navigator.clipboard.writeText(text).then(function () {
-        showStatus("Ideas copied to clipboard.");
-      });
+      if (!text.trim()) {
+        showStatus("There are no ideas to copy yet.");
+        return;
+      }
+
+      await copyTextToClipboard(text, "Ideas copied to clipboard.");
     });
   }
 
@@ -199,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
       imageOutput.classList.remove("hidden");
     } catch (err) {
       imageLoader.classList.add("hidden");
-      showStatus("Error: " + err.message);
+      showStatus(err.message || "We couldn’t fetch visual references right now.");
     } finally {
       generateImageBtn.disabled = false;
     }
@@ -224,11 +231,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       const text = await groqChat(prompt);
-      const lines = text.split("\n").filter(line => line.trim().length > 0);
+      const lines = text
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
 
-      lines.forEach(line => {
+      lines.forEach((line) => {
         const li = document.createElement("li");
-        li.textContent = line.trim();
+        li.textContent = line;
         storyboardList.appendChild(li);
       });
 
@@ -236,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
       videoOutput.classList.remove("hidden");
     } catch (err) {
       videoLoader.classList.add("hidden");
-      showStatus("Error: " + err.message);
+      showStatus(err.message || "We couldn’t generate a storyboard right now.");
     } finally {
       generateStoryboardBtn.disabled = false;
     }
@@ -244,15 +254,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const copyStoryboard = document.getElementById("copyStoryboard");
   if (copyStoryboard) {
-    copyStoryboard.addEventListener("click", function () {
+    copyStoryboard.addEventListener("click", async function () {
       const items = document.querySelectorAll("#storyboardList li");
       const text = Array.from(items)
-        .map(li => li.textContent)
+        .map((li) => li.textContent)
         .join("\n");
 
-      navigator.clipboard.writeText(text).then(function () {
-        showStatus("Storyboard copied to clipboard.");
-      });
+      if (!text.trim()) {
+        showStatus("There is no storyboard to copy yet.");
+        return;
+      }
+
+      await copyTextToClipboard(text, "Storyboard copied to clipboard.");
     });
   }
 
@@ -272,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btn.addEventListener("click", function () {
       recognition.start();
-      btn.textContent = "Listening...";
+      btn.textContent = "●";
     });
 
     recognition.addEventListener("result", function (e) {
@@ -286,6 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     recognition.addEventListener("error", function () {
       btn.textContent = "🎤";
+      showStatus("Voice input is not available right now.");
     });
   }
 
